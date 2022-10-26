@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/tracker.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous" defer></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous" defer></script>
     <script src="../assets/js/script.js" defer></script>
-
     <title>My Tracker</title>
 </head>
 <body>
@@ -22,44 +21,7 @@
         <input type="text" placeholder="Enter Movie Here" />
         <button>Action!</button>
       </form>
-    <div class="dragbox" id="movie-fav">
-        <li class="listitem">
-            <div class="text">1 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">2 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">3 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">4 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">5 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">6 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">7 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">8 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">9 <i class="fa fa-film"></i></div>
-        </li>
-        <li class="listitem">
-            <div class="text">10 <i class="fa fa-film"></i></div>
-        </li>
-    </div>
-   <script>
-        var dragBox = document.querySelector('.dragbox')
-        new Sortable(dragBox,{
-            Animation: 400
-        })
-   </script>
-
+    <ol class="dragbox" id="movie-fav">
+    </ol>
 </body>
 </html>
