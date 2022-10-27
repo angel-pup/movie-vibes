@@ -7,7 +7,6 @@ $(function() { // start of jQuery function for on load best practice
     let $searchResultsEl = $('#search-results-container');
 
     // for dynamic elements
-    let myMovies = ["Movie 1", "Movie 2", "Movie 3", "Movie 4"];
     let favoriteListOrder = [];
 
     // sortable functionality
@@ -26,15 +25,15 @@ $(function() { // start of jQuery function for on load best practice
     }
     // for creating movie favorite list dynamically
     function updateFavorites() {
-        myMovies = favoriteListOrder;
+        //myMovies = favoriteListOrder; // modify to store favorites in local DB (when you click the save button)
     }
 
     // for adding movies to favorite list, calls updateFavorites function
     function addToFavorites(event) {
         event.preventDefault();
-        myMovies.unshift(event.target.id);
+        favoriteListOrder.unshift(event.target.id);
         $movieFavEl.empty();
-        myMovies.forEach((m) => {
+        favoriteListOrder.forEach((m) => {
             $movieFavEl.append("<li mid=\"" + event.target.id + "\" class=\"listitem\"><div class=\"text\">" + m
                 + "<i class=\"fa fa-film\"></i></div></li>");
         });
