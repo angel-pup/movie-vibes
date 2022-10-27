@@ -12,22 +12,21 @@ $(function() { // start of jQuery function for on load best practice
 
     // sortable functionality
     $dragBoxEl.sortable({
-        stop: favoriteListOrder = $dragBoxEl.sortable("toArray"), //(event, ui) => updateArray(event, ui)
         placeholder: "sortable-placeholder", // is this even being used?
         opacity: 0.5
     })
 
-    // for updating movie array
-    function updateArray() {
-        myMovies = favoriteListOrder; // basic functionality
+    function grabCurrentList() {
+        let array = []
+        let numOfEl = $dragBoxEl.children('li').length;
+        for (let i = 0; i < numOfEl; i++) {
+            array.push($dragBoxEl.children('li').eq(i).attr('mid'));
+        }
+        favoriteListOrder = array;
     }
-
     // for creating movie favorite list dynamically
     function updateFavorites() {
-    $movieFavEl.empty();
-        myMovies.forEach((x) => {
-            $movieFavEl.append("<li class=\"listitem\"><div class=\"text\"> " + x + " <i class=\"fa fa-film\"></i></div></li>");
-        });
+        myMovies = favoriteListOrder;
     }
 
     // for adding movies to favorite list, calls updateFavorites function
@@ -36,7 +35,7 @@ $(function() { // start of jQuery function for on load best practice
         myMovies.unshift(event.target.id);
         $movieFavEl.empty();
         myMovies.forEach((m) => {
-            $movieFavEl.append("<li class=\"listitem\"><div class=\"text\">" + m
+            $movieFavEl.append("<li mid=\"" + event.target.id + "\" class=\"listitem\"><div class=\"text\">" + m
                 + "<i class=\"fa fa-film\"></i></div></li>");
         });
     }
@@ -70,5 +69,6 @@ $(function() { // start of jQuery function for on load best practice
     });
 
     $searchResultsEl.on('click', '.poster img', addToFavorites); // update to point to button instead
-
+    $dragBoxEl.on( "sortupdate", grabCurrentList);
+    
 }); // end of jQuery function for on load best practice
