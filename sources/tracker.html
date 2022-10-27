@@ -12,12 +12,24 @@
         <title>My Tracker</title>
     </head>
     <body>
-        <header>🎞Top 10 list🎞</header>
-        <nav>
-            <a class="nav" href="tracker.html">Movie Tracker🎬</a>
-            <a class="nav" href="soon.html">Upcoming Movies🎬</a>
-            <a class="nav" href="compare.html">Compare with Crtics🎬</a>
-        </nav>
+        <header class="hero is-small is-warning">
+            <div class="hero-body">
+              <p class="title">
+                🎞Favorite list🎞
+              </p>
+              <p class="subtitle">
+                "I'm going to make them a *list* they can't refuse" -The Godfather
+              </p>
+            </div>
+        </header>
+
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+              <li class="is-active"><a class="nav" href="tracker.html">Movie Tracker🎬</a></li>
+              <li><a class="nav" href="soon.html">Upcoming Movies🍿</a></li>
+              <li><a class="nav" href="compare.html">Compare with Crtics📝</a></li>
+            </ul>
+          </nav>
         <!-- API testing here -->
         <form id="search-movie">
             <label>
@@ -34,12 +46,6 @@
 
         <!-- Display results of API testing -->
         <div id="search-results-container">
-            <!--
-                <h3 class="title">Title</h3>
-                <p class="plot">Plot</p>
-                <span class="year">Year</span>
-            -->
-            <span class="poster">Poster</span>
         </div>
         <div>
             <h2 class="title"></h2>
