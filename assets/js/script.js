@@ -8,17 +8,18 @@ $(function() { // start of jQuery function for on load best practice
 
     // for dynamic elements
     let myMovies = ["Movie 1", "Movie 2", "Movie 3", "Movie 4"];
-    let sortedIDs = [];
+    let favoriteListOrder = [];
 
     // sortable functionality
     $dragBoxEl.sortable({
-        stop: (x, y) => console.log($dragBoxEl.sortable( "toArray" )) //(event, ui) => updateArray(event, ui)
+        stop: favoriteListOrder = $dragBoxEl.sortable("toArray"), //(event, ui) => updateArray(event, ui)
+        placeholder: "sortable-placeholder", // is this even being used?
+        opacity: 0.5
     })
 
     // for updating movie array
-    function updateArray(event, ui) {
-        console.log(ui);
-        console.log(event);
+    function updateArray() {
+        myMovies = favoriteListOrder; // basic functionality
     }
 
     // for creating movie favorite list dynamically
@@ -31,18 +32,17 @@ $(function() { // start of jQuery function for on load best practice
 
     // for adding movies to favorite list, calls updateFavorites function
     function addToFavorites(event) {
-        event.preventDefault()
-        let movie;
-        movie = $(event.target).children("input").val()
-        // console.log(movie)
-        myMovies.unshift(movie)
-        updateFavorites()
-        //grabEventData()
+        event.preventDefault();
+        myMovies.unshift(event.target.id);
+        $movieFavEl.empty();
+        myMovies.forEach((m) => {
+            $movieFavEl.append("<li class=\"listitem\"><div class=\"text\">" + m
+                + "<i class=\"fa fa-film\"></i></div></li>");
+        });
     }
 
-    // dumb (smart?) ajax stuff
-    $searchResultsEl.hide();
     $searchMovieEl.on('submit', function(p_oEvent){
+        $searchResultsEl.empty();
         var sUrl, sMovie, oData;
         p_oEvent.preventDefault();
         sMovie = $searchMovieEl.find('input').val();
@@ -50,17 +50,25 @@ $(function() { // start of jQuery function for on load best practice
         sUrl = 'https://www.omdbapi.com/?s=' + sMovie + '&type=movie&tomatoes=true&apikey=5e467eda'
         $.ajax(sUrl, {
             complete: function(p_oXHR, p_sStatus){
-                oData = $.parseJSON(p_oXHR.responseText).Search[0]; // Modify for dynamic search results
+                oData = $.parseJSON(p_oXHR.responseText).Search; // Modify for dynamic search results
                 console.log(oData);
-
                 if (oData.Response === "False") {
                     $searchResultsEl.hide();
                 } else {
-                    $searchResultsEl.find('.poster').html('<img src="' + oData.Poster + '"/>');
+                    oData.forEach((x) => {
+                        $searchResultsEl.append("<div class=\"poster\"><img id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
+                    });
+                    /*<!--
+                        <h3 class="title">Title</h3>
+                        <p class="plot">Plot</p>
+                        <span class="year">Year</span>
+                    -->*/
                     $searchResultsEl.show();
                 }
             }
         });
     });
+
+    $searchResultsEl.on('click', '.poster img', addToFavorites); // update to point to button instead
 
 }); // end of jQuery function for on load best practice
