@@ -8,10 +8,11 @@ $(function() { // start of jQuery function for on load best practice
 
     // for dynamic elements
     let myMovies = ["Movie 1", "Movie 2", "Movie 3", "Movie 4"];
+    let sortedIDs = [];
 
     // sortable functionality
     $dragBoxEl.sortable({
-        stop: (event, ui) => updateArray(event, ui)
+        stop: (x, y) => console.log($dragBoxEl.sortable( "toArray" )) //(event, ui) => updateArray(event, ui)
     })
 
     // for updating movie array
@@ -55,10 +56,7 @@ $(function() { // start of jQuery function for on load best practice
                 if (oData.Response === "False") {
                     $searchResultsEl.hide();
                 } else {
-                    $searchResultsEl.find('.title').text(oData.Title);
-                    $searchResultsEl.find('.plot').text(oData.Plot);
                     $searchResultsEl.find('.poster').html('<img src="' + oData.Poster + '"/>');
-                    $searchResultsEl.find('.year').text(oData.Year);
                     $searchResultsEl.show();
                 }
             }
@@ -66,9 +64,3 @@ $(function() { // start of jQuery function for on load best practice
     });
 
 }); // end of jQuery function for on load best practice
-
-
-
-
-
-
