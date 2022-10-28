@@ -6,9 +6,14 @@ $(function() { // start of jQuery function for on load best practice
     let $searchMovieEl = $("#search-movie");
     let $actionButtonEl = $("#search-movie a");
     let $searchResultsEl = $('#search-results-container');
+    let $modalBodEl = $('.modal-card-body');
+    let $modalPlotEl = $('.modal-movie-plot');
+    let $modalTitleEl = $('.modal-movie-title');
+    let $modalYearEl = $('.modal-movie-year');
 
     // for dynamic elements
     let favoriteListOrder = [];
+    let currentSearchedDetails = [];
 
     // sortable functionality
     $dragBoxEl.sortable({
@@ -41,27 +46,48 @@ $(function() { // start of jQuery function for on load best practice
     }
 
     function updateModal(event) {
-        $('.modal-card-body').empty();
-        $('.modal-card-body').append("<h2>"+event.target.id+"</h2>");
+        $modalBodEl.empty();
+        $modalBodEl.append("<h2>"+event.target.id+"</h2>");
+        $modalTitleEl.innerHTML = event.target.plot;
     }
 
     $actionButtonEl.on('click', function(p_oEvent){
-        $searchResultsEl.empty();
-        var sUrl, sMovie, oData;
+        let sUrl, sMovie, oData;
         p_oEvent.preventDefault();
         sMovie = $searchMovieEl.find('input').val();
-        console.log(sMovie);
         sUrl = 'https://www.omdbapi.com/?s=' + sMovie + '&type=movie&tomatoes=true&apikey=5e467eda'
         $.ajax(sUrl, {
             complete: function(p_oXHR, p_sStatus){
                 oData = $.parseJSON(p_oXHR.responseText).Search; // Modify for dynamic search results
-                console.log(oData);
                 if (oData.Response === "False") {
                     $searchResultsEl.hide();
                 } else {
+
+                    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => { $trigger.removeEventListener('click', (event)); });
+
+                    $searchResultsEl.empty();
+
+                    currentSearchedDetails = [];
+
                     oData.forEach((x) => {
-                        $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\" data-target=\"modal-js-example\"><img id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
+                        /* //DISABLED FEATURE UNTIL WE FINALIZE BUILD
+                        let oData2;
+                        sUrl = 'https://www.omdbapi.com/?i=' + x.imdbID + '&type=movie&apikey=5e467eda'
+                        $.ajax(sUrl, {
+                            complete: function(p_oXHR2, p_sStatus2){
+                                oData2 = $.parseJSON(p_oXHR2.responseText);
+                                if (oData2.Response === "False") {
+
+                                } else {
+                                    currentSearchedDetails.push({ 'plot': oData2.Plot, 'title': oData2.Title, 'year': oData2.Year });
+                                }
+
+                            }
+                        }) */
+                        $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\" data-target=\"modal-js-poster\"><img alt=\'Movie Poster for...\' id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
                     });
+
+                    console.log(currentSearchedDetails);
 
                     (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
                         //const movieID = event.target.id;
@@ -73,19 +99,15 @@ $(function() { // start of jQuery function for on load best practice
                             openModal($target);
                         });
                     });
-                    /*<!--
-                        <h3 class="title">Title</h3>
-                        <p class="plot">Plot</p>
-                        <span class="year">Year</span>
-                    -->*/
-                    $searchResultsEl.show();
+
+                    $searchResultsEl.show(); //last statement of else
                 }
             }
         });
     });
 
     //$searchResultsEl.on('click', '.js-modal-trigger', addToFavorites); // update to point to button instead
-    $dragBoxEl.on( "sortupdate", grabCurrentList);
+    $dragBoxEl.on("sortupdate", grabCurrentList);
 
     function openModal($el) {
         $el.classList.add('is-active');
