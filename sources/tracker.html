@@ -25,11 +25,11 @@
 
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-              <li class="is-active"><a class="nav" href="tracker.html">Movie Tracker🎬</a></li>
+              <li><a class="nav" href="tracker.html">Movie Tracker🎬</a></li>
               <li><a class="nav" href="soon.html">Upcoming Movies🍿</a></li>
               <li><a class="nav" href="compare.html">Compare with Crtics📝</a></li>
             </ul>
-          </nav>
+        </nav>
         <!-- API testing here -->
         <form class="field has-addons" id="search-movie">
             <label class="control">
@@ -38,8 +38,8 @@
             <div class="control">  
                 <a class= "button is-info">Action!</a>
             </div>
-        </form>  
-        
+        </form>
+
         <div class="columns">
             <div class="column is-one-fifth">
                 <ol class="dragbox" id="movie-fav">
@@ -51,33 +51,32 @@
             </div>
             <!-- Display results of API testing -->
             <div class="column">
-              <div id="search-results-container" class="is-flex-wrap-wrap columns"></div>
-                
-                    <div class="modal is-active">
-                      <div class="modal-background"></div>
-                      <div class="modal-card">
-                        <header class="modal-card-head">
-                          <p class="modal-card-title">Modal title</p>
-                          <button class="delete" aria-label="close"></button>
-                        </header>
-                        <section class="modal-card-body">
-                          <!-- Content ... -->
-                        </section>
-                        <footer class="modal-card-foot">
-                          <button class="button is-success">Save changes</button>
-                          <button class="button">Cancel</button>
-                        </footer>
-                      </div>
-                    </div>
-            
+                <div id="search-results-container" class="is-flex-wrap-wrap columns"></div>
+                <div id="modal-js-example" class="modal">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <header class="modal-card-head">
+                      <p class="modal-card-title">Modal title</p>
+                      <button class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                      <!-- Content ... -->
+                    </section>
+                    <footer class="modal-card-foot">
+                      <button class="button is-success">Save changes</button>
+                    </footer>
+                  </div>
+                </div>
             </div>
         </div>
+
         <div>
             <h2 class="title"></h2>
             <p class="plot"></p>
             <span class="year"></span>
-            <button class="add">Add to Favorites</button>
+            <button class="add js-modal-trigger" data-target="modal-js-example">Add to Favorites</button>
         </div>
+
         <footer class="footer">
             <div class="content has-text-centered">
               <p>
@@ -86,6 +85,5 @@
               </p>  
             </div>
         </footer>
-            
     </body>
 </html>
