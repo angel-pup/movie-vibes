@@ -6,6 +6,7 @@ $(function() { // start of jQuery function for on load best practice
     let $searchMovieEl = $("#search-movie");
     let $actionButtonEl = $("#search-movie a");
     let $searchResultsEl = $('#search-results-container');
+    let $modalBodEl = $('.modal-card-body');
 
     // for dynamic elements
     let favoriteListOrder = [];
@@ -41,13 +42,13 @@ $(function() { // start of jQuery function for on load best practice
     }
 
     function updateModal(event) {
-        $('.modal-card-body').empty();
-        $('.modal-card-body').append("<h2>"+event.target.id+"</h2>");
+        $modalBodEl.empty();
+        $modalBodEl.append("<h2>"+event.target.id+"</h2>");
     }
 
     $actionButtonEl.on('click', function(p_oEvent){
         $searchResultsEl.empty();
-        var sUrl, sMovie, oData;
+        let sUrl, sMovie, oData;
         p_oEvent.preventDefault();
         sMovie = $searchMovieEl.find('input').val();
         console.log(sMovie);
@@ -60,7 +61,7 @@ $(function() { // start of jQuery function for on load best practice
                     $searchResultsEl.hide();
                 } else {
                     oData.forEach((x) => {
-                        $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\" data-target=\"modal-js-example\"><img id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
+                        $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\" data-target=\"modal-js-poster\"><img alt=\'Movie Poster for...\' id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
                     });
 
                     (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
@@ -73,11 +74,6 @@ $(function() { // start of jQuery function for on load best practice
                             openModal($target);
                         });
                     });
-                    /*<!--
-                        <h3 class="title">Title</h3>
-                        <p class="plot">Plot</p>
-                        <span class="year">Year</span>
-                    -->*/
                     $searchResultsEl.show();
                 }
             }
@@ -85,7 +81,7 @@ $(function() { // start of jQuery function for on load best practice
     });
 
     //$searchResultsEl.on('click', '.js-modal-trigger', addToFavorites); // update to point to button instead
-    $dragBoxEl.on( "sortupdate", grabCurrentList);
+    $dragBoxEl.on("sortupdate", grabCurrentList);
 
     function openModal($el) {
         $el.classList.add('is-active');

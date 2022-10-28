@@ -52,7 +52,7 @@
             <!-- Display results of API testing -->
             <div class="column">
                 <div id="search-results-container" class="is-flex-wrap-wrap columns"></div>
-                <div id="modal-js-example" class="modal">
+                <div id="modal-js-poster" class="modal">
                   <div class="modal-background"></div>
                   <div class="modal-card">
                     <header class="modal-card-head">
@@ -60,7 +60,13 @@
                       <button class="delete" aria-label="close"></button>
                     </header>
                     <section class="modal-card-body">
-                      <!-- Content ... -->
+                        <div id="modal-movie-details" class="columns">
+                            <h2 id="modal-movie-title" class="title column is-full"></h2>
+                            <span id="modal-movie-year" class="year column is-one-fifth"></span>
+                            <div class="column is-three-fifths"></div>
+                            <button id="modal-movie-button" class="add js-modal-trigger column is-one-fifth" data-target="modal-js-addfav">Add to Favorites</button>
+                            <p id="modal-movie-plot" class="plot column is-full"></p>
+                        </div>
                     </section>
                     <footer class="modal-card-foot">
                       <button class="button is-success">Save changes</button>
@@ -68,13 +74,6 @@
                   </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <h2 class="title"></h2>
-            <p class="plot"></p>
-            <span class="year"></span>
-            <button class="add js-modal-trigger" data-target="modal-js-example">Add to Favorites</button>
         </div>
 
         <footer class="footer">
