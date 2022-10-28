@@ -4,6 +4,7 @@ $(function() { // start of jQuery function for on load best practice
     let $movieFavEl = $("#movie-fav");
     let $dragBoxEl = $(".dragbox");
     let $searchMovieEl = $("#search-movie");
+    let $actionButtonEl = $("#search-movie a");
     let $searchResultsEl = $('#search-results-container');
 
     // for dynamic elements
@@ -39,7 +40,12 @@ $(function() { // start of jQuery function for on load best practice
         });
     }
 
-    $("#search-movie a").on('click', function(p_oEvent){
+    function updateModal(event) {
+        $('.modal-card-body').empty();
+        $('.modal-card-body').append("<h2>"+event.target.id+"</h2>");
+    }
+
+    $actionButtonEl.on('click', function(p_oEvent){
         $searchResultsEl.empty();
         var sUrl, sMovie, oData;
         p_oEvent.preventDefault();
@@ -54,7 +60,18 @@ $(function() { // start of jQuery function for on load best practice
                     $searchResultsEl.hide();
                 } else {
                     oData.forEach((x) => {
-                        $searchResultsEl.append("<div class=\"poster is-one-quarter\"><img id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
+                        $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\" data-target=\"modal-js-example\"><img id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
+                    });
+
+                    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+                        //const movieID = event.target.id;
+                        const modal = $trigger.dataset.target;
+                        const $target = document.getElementById(modal);
+
+                        $trigger.addEventListener('click', (event) => {
+                            updateModal(event);
+                            openModal($target);
+                        });
                     });
                     /*<!--
                         <h3 class="title">Title</h3>
@@ -67,52 +84,38 @@ $(function() { // start of jQuery function for on load best practice
         });
     });
 
-    $searchResultsEl.on('click', '.poster img', addToFavorites); // update to point to button instead
+    //$searchResultsEl.on('click', '.js-modal-trigger', addToFavorites); // update to point to button instead
     $dragBoxEl.on( "sortupdate", grabCurrentList);
-    
-}); // end of jQuery function for on load best practice
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Functions to open and close a modal
     function openModal($el) {
-      $el.classList.add('is-active');
+        $el.classList.add('is-active');
     }
-  
+
     function closeModal($el) {
-      $el.classList.remove('is-active');
+        $el.classList.remove('is-active');
     }
-  
+
     function closeAllModals() {
-      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-        closeModal($modal);
-      });
+        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+            closeModal($modal);
+        });
     }
-  
-    // Add a click event on buttons to open a specific modal
-    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
-      const modal = $trigger.dataset.target;
-      const $target = document.getElementById(modal);
-  
-      $trigger.addEventListener('click', () => {
-        openModal($target);
-      });
-    });
-  
+
     // Add a click event on various child elements to close the parent modal
     (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
-      const $target = $close.closest('.modal');
-  
-      $close.addEventListener('click', () => {
-        closeModal($target);
-      });
+        const $target = $close.closest('.modal');
+
+        $close.addEventListener('click', () => {
+            closeModal($target);
+        });
     });
-  
+
     // Add a keyboard event to close all modals
     document.addEventListener('keydown', (event) => {
-      const e = event || window.event;
-  
-      if (e.keyCode === 27) { // Escape key
-        closeAllModals();
-      }
+        const e = event || window.event;
+
+        if (e.keyCode === 27) { // Escape key
+            closeAllModals();
+        }
     });
-  });
+}); // end of jQuery function for on load best practice
