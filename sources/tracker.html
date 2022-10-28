@@ -31,21 +31,28 @@
             </ul>
           </nav>
         <!-- API testing here -->
-        <form id="search-movie">
-            <label>
-                <input type="text" name="movie" placeholder="movie title" />
+        <form class="field has-addons" id="search-movie">
+            <label class="control">
+                <input type="text" class="input is-rounded" name="movie" placeholder="movie title" />
             </label>
-            <button>Action!</button>
-        </form>
-        <ol class="dragbox" id="movie-fav">
-            <li mid='mov1' class="listitem"><div class="text">Movie 1<i class="fa fa-film"></i></div></li>
-            <li mid='mov2' class="listitem"><div class="text">Movie 2<i class="fa fa-film"></i></div></li>
-            <li mid='mov3' class="listitem"><div class="text">Movie 3<i class="fa fa-film"></i></div></li>
-            <li mid='mov4' class="listitem"><div class="text">Movie 4<i class="fa fa-film"></i></div></li>
-        </ol>
-
-        <!-- Display results of API testing -->
-        <div id="search-results-container">
+            <div class="control">  
+                <a class= "button is-info">Action!</a>
+            </div>
+        </form>  
+        
+        <div class="columns">
+            <div class="column is-one-fifth">
+                <ol class="dragbox" id="movie-fav">
+                    <li mid='mov1' class="listitem"><div class="text">Movie 1<i class="fa fa-film"></i></div></li>
+                    <li mid='mov2' class="listitem"><div class="text">Movie 2<i class="fa fa-film"></i></div></li>
+                    <li mid='mov3' class="listitem"><div class="text">Movie 3<i class="fa fa-film"></i></div></li>
+                    <li mid='mov4' class="listitem"><div class="text">Movie 4<i class="fa fa-film"></i></div></li>
+                </ol>
+            </div>
+            <!-- Display results of API testing -->
+            <div class="column">
+                <div id="search-results-container" class="is-flex-wrap-wrap columns"></div>
+            </div>
         </div>
         <div>
             <h2 class="title"></h2>

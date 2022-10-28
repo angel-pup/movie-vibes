@@ -39,7 +39,7 @@ $(function() { // start of jQuery function for on load best practice
         });
     }
 
-    $searchMovieEl.on('submit', function(p_oEvent){
+    $("#search-movie a").on('click', function(p_oEvent){
         $searchResultsEl.empty();
         var sUrl, sMovie, oData;
         p_oEvent.preventDefault();
@@ -54,7 +54,7 @@ $(function() { // start of jQuery function for on load best practice
                     $searchResultsEl.hide();
                 } else {
                     oData.forEach((x) => {
-                        $searchResultsEl.append("<div class=\"poster\"><img id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
+                        $searchResultsEl.append("<div class=\"poster is-one-quarter\"><img id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/></div>")
                     });
                     /*<!--
                         <h3 class="title">Title</h3>
