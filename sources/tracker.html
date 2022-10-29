@@ -50,27 +50,27 @@
                 </ol>
             </div>
             <!-- Display results of API testing -->
-            <div class="column">
-                <div id="search-results-container" class="is-flex-wrap-wrap columns"></div>
+            <div id="search-results-container" class="column">
+                <div id="search-results" class="is-flex-wrap-wrap columns"></div>
                 <div id="modal-js-poster" class="modal">
                   <div class="modal-background"></div>
                   <div class="modal-card">
                     <header class="modal-card-head">
-                      <p class="modal-card-title">Modal title</p>
+                      <p class="modal-card-title"></p>
                       <button class="delete" aria-label="close"></button>
                     </header>
                     <section class="modal-card-body">
-                        <div id="modal-movie-details" class="columns">
-                            <h2 id="modal-movie-title" class="title column is-full"></h2>
-                            <span id="modal-movie-year" class="year column is-one-fifth"></span>
-                            <div class="column is-three-fifths"></div>
-                            <p id="modal-movie-plot" class="plot column is-full"></p>
+                        <div id="modal-movie-details" class="content">
+                            <h1 id="modal-movie-title" class="title">title</h1>
+                            <h2 id="modal-movie-year" class="subtitle">year</h2>
+                            <h3>Plot: </h3>
+                            <p id="modal-movie-plot">plot</p>
                         </div>
                     </section>
                     <footer class="modal-card-foot">
                         <button id="modal-movie-button"
-                                class=" button is-success add js-modal-trigger"
-                                data-target="modal-js-addfav">Add to Favorites!</button>
+                                class=" button is-success add"
+                                data-target="modal-js-poster">Add to Favorites!</button>
                         <!-- NO LONGER NEEDED, LEAVING FOR REFERENCE PURPOSES
                         <button class="button is-success">Save changes</button>-->
                     </footer>
