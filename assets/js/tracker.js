@@ -10,9 +10,10 @@ $(function() { // start of jQuery function for on load best practice
     let $modalPlotEl = $('.modal-movie-plot');
     let $modalTitleEl = $('.modal-movie-title');
     let $modalYearEl = $('.modal-movie-year');
+    let $modalButtonEl = $('.modal-movie-button');
 
     // for dynamic elements
-    let favoriteListOrder = [];
+    let favoriteListOrder = []; // Array of binary arrays
     let currentSearchedDetails = [];
 
     // sortable functionality
@@ -22,13 +23,14 @@ $(function() { // start of jQuery function for on load best practice
     })
 
     function grabCurrentList() {
-        let array = []
+        let array = [];
         let numOfEl = $dragBoxEl.children('li').length;
         for (let i = 0; i < numOfEl; i++) {
-            array.push($dragBoxEl.children('li').eq(i).attr('mid'));
+            array.push($dragBoxEl.children('li').eq(i).attr('mid'), $dragBoxEl.children('li').eq(i).children()[0].textContent);
         }
         favoriteListOrder = array;
     }
+
     // for creating movie favorite list dynamically
     function updateFavorites() {
         //myMovies = favoriteListOrder; // modify to store favorites in local DB (when you click the save button)
@@ -40,7 +42,7 @@ $(function() { // start of jQuery function for on load best practice
         favoriteListOrder.unshift(event.target.id);
         $movieFavEl.empty();
         favoriteListOrder.forEach((m) => {
-            $movieFavEl.append("<li mid=\"" + event.target.id + "\" class=\"listitem\"><div class=\"text\">" + m
+            $movieFavEl.append("<li mid=\"" + m[0] + "\" class=\"listitem\"><div class=\"text\">" + m[1]
                 + "<i class=\"fa fa-film\"></i></div></li>");
         });
     }
@@ -107,7 +109,8 @@ $(function() { // start of jQuery function for on load best practice
     });
 
     //$searchResultsEl.on('click', '.js-modal-trigger', addToFavorites); // update to point to button instead
-    $dragBoxEl.on("sortupdate", grabCurrentList);
+    $dragBoxEl.on('sortupdate', grabCurrentList);
+    $modalButtonEl.on('click', addToFavorites);
 
     function openModal($el) {
         $el.classList.add('is-active');
