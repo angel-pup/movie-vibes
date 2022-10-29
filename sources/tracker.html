@@ -43,10 +43,10 @@
         <div class="columns">
             <div class="column is-one-fifth">
                 <ol class="dragbox" id="movie-fav">
-                    <li mid='mov1' class="listitem"><div class="text">Movie 1<i class="fa fa-film"></i></div></li>
-                    <li mid='mov2' class="listitem"><div class="text">Movie 2<i class="fa fa-film"></i></div></li>
-                    <li mid='mov3' class="listitem"><div class="text">Movie 3<i class="fa fa-film"></i></div></li>
-                    <li mid='mov4' class="listitem"><div class="text">Movie 4<i class="fa fa-film"></i></div></li>
+                    <li mid='mov1' class="listitem"><p class="text">Movie 1</p></li>
+                    <li mid='mov2' class="listitem"><p class="text">Movie 2</p></li>
+                    <li mid='mov3' class="listitem"><p class="text">Movie 3</p></li>
+                    <li mid='mov4' class="listitem"><p class="text">Movie 4</p></li>
                 </ol>
             </div>
             <!-- Display results of API testing -->
@@ -64,12 +64,15 @@
                             <h2 id="modal-movie-title" class="title column is-full"></h2>
                             <span id="modal-movie-year" class="year column is-one-fifth"></span>
                             <div class="column is-three-fifths"></div>
-                            <button id="modal-movie-button" class="add js-modal-trigger column is-one-fifth" data-target="modal-js-addfav">Add to Favorites</button>
                             <p id="modal-movie-plot" class="plot column is-full"></p>
                         </div>
                     </section>
                     <footer class="modal-card-foot">
-                      <button class="button is-success">Save changes</button>
+                        <button id="modal-movie-button"
+                                class=" button is-success add js-modal-trigger"
+                                data-target="modal-js-addfav">Add to Favorites!</button>
+                        <!-- NO LONGER NEEDED, LEAVING FOR REFERENCE PURPOSES
+                        <button class="button is-success">Save changes</button>-->
                     </footer>
                   </div>
                 </div>
