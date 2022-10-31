@@ -41,36 +41,37 @@
         </form>
 
         <div class="columns">
-            <div class="column is-one-fifth">
-                <ol class="dragbox" id="movie-fav">
+            <div class="column is-one-fourth">
+                <button class="button is-success add ml-6" type="button" id="save-list">Save movie order</button>
+                <ol class="dragbox mx-6" id="movie-fav">
                 </ol>
             </div>
             <!-- Display results of API testing -->
             <div id="search-results-container" class="column">
                 <div id="search-results" class="is-flex-wrap-wrap columns"></div>
                 <div id="modal-js-poster" class="modal">
-                  <div class="modal-background"></div>
-                  <div class="modal-card">
-                    <header class="modal-card-head">
-                      <p class="modal-card-title">Movie Details</p>
-                      <button class="delete" aria-label="close"></button>
-                    </header>
-                    <section class="modal-card-body">
-                        <div id="modal-movie-details" class="content">
-                            <h1 id="modal-movie-title" class="title">title</h1>
-                            <h2 id="modal-movie-year" class="subtitle">year</h2>
-                            <h3>Plot: </h3>
-                            <p id="modal-movie-plot">plot</p>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button id="modal-movie-button"
-                                class=" button is-success add"
-                                data-target="modal-js-poster">Add to Favorites!</button>
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Movie Details</p>
+                            <button class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            <div id="modal-movie-details" class="content">
+                                <h1 id="modal-movie-title" class="title">title</h1>
+                                <h2 id="modal-movie-year" class="subtitle">year</h2>
+                                <h3>Plot: </h3>
+                                <p id="modal-movie-plot">plot</p>
+                            </div>
+                        </section>
+                        <footer class="modal-card-foot">
+                            <button id="modal-movie-button"
+                                    class=" button is-success add"
+                                    data-target="modal-js-poster">Add to Favorites!</button>
                         <!-- NO LONGER NEEDED, LEAVING FOR REFERENCE PURPOSES
                         <button class="button is-success">Save changes</button>-->
-                    </footer>
-                  </div>
+                        </footer>
+                    </div>
                 </div>
             </div>
         </div>
