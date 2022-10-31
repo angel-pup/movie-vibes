@@ -12,7 +12,8 @@ $(function() { // start of jQuery function for on load - best practice
     const $modalButtonEl = $('#modal-movie-button');
 
     // for dynamic elements
-    let favoriteListOrder = []; // Array of binary arrays
+    let favoriteMovieOrder = [];
+    let currentMovieTarget;
 
     // sortable functionality
     $dragBoxEl.sortable({
@@ -53,42 +54,44 @@ $(function() { // start of jQuery function for on load - best practice
     });
 
     function grabCurrentList() {
-        let array = [];
-        const numOfEl = $dragBoxEl.children('li').length;
-        for (let i = 0; i < numOfEl; i++) {
-            array.push($dragBoxEl.children('li').eq(i).attr('mid'), $dragBoxEl.children('li').eq(i).children()[0].textContent);
+        if (localStorage.getItem('favoriteOrder') !== null) {
+                favoriteMovieOrder = JSON.parse(localStorage.getItem('favoriteOrder'));
         }
-        favoriteListOrder = array;
+    }
+
+    function saveCurrentList(array) {
+        localStorage.setItem('favoriteOrder', JSON.stringify(array));
     }
 
     // for creating movie favorite list dynamically
-    function updateFavorites() {
+    function refreshFavorites() {
         grabCurrentList();
-        //myMovies = favoriteListOrder; // modify to store favorites in local DB (when you click the save button)
+        $movieFavEl.empty();
+        if (favoriteMovieOrder !== null) {
+            favoriteMovieOrder.forEach((m) => {
+                $movieFavEl.append("<li mid=\"" + m + "\" class=\"listitem\"><div class=\"text\">" + JSON.parse(localStorage.getItem(m)).Title
+                    + "<i class=\"fa fa-film\"></i></div></li>");
+            });
+        }
     }
 
-    // for adding movies to favorite list, calls updateFavorites function
-    function addToFavorites(event) {
-        event.preventDefault();
+    // for adding movies to favorite list, calls refresh
+    //Favorites function
+    function addToFavorites() {
         grabCurrentList();
-        favoriteListOrder.unshift([event.parent('#'), event.parent().children('#modal-movie-title').innerHTML]);
-        $movieFavEl.empty();
-        console.log(favoriteListOrder);
-        favoriteListOrder.forEach((m) => {
-            $movieFavEl.append("<li mid=\"" + m[0] + "\" class=\"listitem\"><div class=\"text\">" + m[1]
-                + "<i class=\"fa fa-film\"></i></div></li>");
-        });
+        favoriteMovieOrder.unshift(currentMovieTarget);
+        saveCurrentList(favoriteMovieOrder);
+        refreshFavorites();
     }
 
     function updateModal(event) {
-        const movieID = event.target.id;
-
-        $modalTitleEl.html(JSON.parse(localStorage.getItem(movieID)).Title);
-        $modalPlotEl.html(JSON.parse(localStorage.getItem(movieID)).Plot);
-        $modalYearEl.html(JSON.parse(localStorage.getItem(movieID)).Year);
+        currentMovieTarget = event.target.id;
+        $modalTitleEl.html(JSON.parse(localStorage.getItem(currentMovieTarget)).Title);
+        $modalPlotEl.html(JSON.parse(localStorage.getItem(currentMovieTarget)).Plot);
+        $modalYearEl.html(JSON.parse(localStorage.getItem(currentMovieTarget)).Year);
     }
 
-    $actionButtonEl.on('click', function(p_oEvent){
+    function APIcall(p_oEvent) {
         let sUrl, sMovie, oData;
         p_oEvent.preventDefault();
         sMovie = $searchMovieEl.find('input').val();
@@ -110,7 +113,7 @@ $(function() { // start of jQuery function for on load - best practice
                     oData.forEach((x) => {
                         // Dynamically show results of our API query
                         $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\"" +
-                            "data-target=\"modal-js-poster\"><img alt=\'Movie Poster for...\' id=\'" +
+                            " data-target=\"modal-js-poster\"><img alt=\'Movie Poster for...\' id=\'" +
                             x.imdbID + "\' src=\'" + x.Poster + "\'/></div>");
 
                         // Store new results in local storage to save on API calls
@@ -132,15 +135,13 @@ $(function() { // start of jQuery function for on load - best practice
                         }
                     });
 
-                    console.log(currentSearchedDetails);
-
                     (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
                         //const movieID = event.target.id;
                         const modal = $trigger.dataset.target;
                         const $target = document.getElementById(modal);
 
                         $trigger.addEventListener('click', (event) => {
-                            updateModal(event);
+                            updateModal(event); // my addition
                             openModal($target);
                         });
                     });
@@ -149,8 +150,13 @@ $(function() { // start of jQuery function for on load - best practice
                 }
             }
         });
-    });
+    }
 
+
+    $searchMovieEl.on('submit', APIcall);
+    $actionButtonEl.on('click', APIcall);
     $dragBoxEl.on('sortupdate', grabCurrentList);
     $modalButtonEl.on('click', addToFavorites);
+
+    refreshFavorites();
 }); // end of jQuery function for on load best practice
