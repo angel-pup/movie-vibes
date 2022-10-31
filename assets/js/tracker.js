@@ -13,7 +13,6 @@ $(function() { // start of jQuery function for on load - best practice
 
     // for dynamic elements
     let favoriteListOrder = []; // Array of binary arrays
-    let currentSearchedDetails;
 
     // sortable functionality
     $dragBoxEl.sortable({
@@ -84,10 +83,9 @@ $(function() { // start of jQuery function for on load - best practice
     function updateModal(event) {
         const movieID = event.target.id;
 
-        $modalTitleEl.html(currentSearchedDetails[movieID].title);
-        $modalPlotEl.html(currentSearchedDetails[movieID].plot);
-        $modalYearEl.html(currentSearchedDetails[movieID].year);
-        console.log(event);
+        $modalTitleEl.html(JSON.parse(localStorage.getItem(movieID)).Title);
+        $modalPlotEl.html(JSON.parse(localStorage.getItem(movieID)).Plot);
+        $modalYearEl.html(JSON.parse(localStorage.getItem(movieID)).Year);
     }
 
     $actionButtonEl.on('click', function(p_oEvent){
@@ -101,32 +99,37 @@ $(function() { // start of jQuery function for on load - best practice
                 if (oData.Response === "False") {
                     $searchResultsEl.hide();
                 } else {
-                    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => { $trigger.removeEventListener('click', (event)); });
+                    (document.querySelectorAll('.js-modal-trigger') || [])
+                        .forEach(($trigger) => {
+                            $trigger.removeEventListener('click', (event)); });
 
                     $searchResultsEl.empty();
 
                     currentSearchedDetails = {};
 
                     oData.forEach((x) => {
-                        /*//DISABLED FEATURE UNTIL WE FINALIZE BUILD
-                        let oData2;
-                        sUrl = 'https://www.omdbapi.com/?i=' + x.imdbID + '&type=movie&apikey=5e467eda'
-                        $.ajax(sUrl, {
-                            complete: function(p_oXHR2, p_sStatus2){
-                                oData2 = $.parseJSON(p_oXHR2.responseText);
-                                if (oData2.Response === "False") {
-
-                                } else {
-                                    console.log(oData2);
-                                    currentSearchedDetails[x.imdbID] = { 'plot': oData2.Plot, 'title': oData2.Title, 'year': oData2.Year, 'actors': oData2.Actors };
-                                }
-
-                            }
-                        });*/
+                        // Dynamically show results of our API query
                         $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\"" +
-                            "data-target=\"modal-js-poster\">" +
-                            "<img alt=\'Movie Poster for...\' id=\'" + x.imdbID + "\' src=\'" + x.Poster + "\'/>" +
-                            "</div>");
+                            "data-target=\"modal-js-poster\"><img alt=\'Movie Poster for...\' id=\'" +
+                            x.imdbID + "\' src=\'" + x.Poster + "\'/></div>");
+
+                        // Store new results in local storage to save on API calls
+                        if (localStorage.getItem(x.imdbID) !== null) {
+                            console.log("Local Storage contains result: " + x.imdbID);
+                        } else {
+                            let oData2;
+                            sUrl = 'https://www.omdbapi.com/?i=' + x.imdbID + '&type=movie&apikey=5e467eda'
+                            $.ajax(sUrl, {
+                                complete: function(p_oXHR2, p_sStatus2){
+                                    oData2 = $.parseJSON(p_oXHR2.responseText);
+                                    if (oData2.Response === "False") {
+                                        console.log("Failed to fetch additional details for " + x.imdbID);
+                                    } else {
+                                        localStorage.setItem(x.imdbID, JSON.stringify(oData2));
+                                    }
+                                }
+                            })
+                        }
                     });
 
                     console.log(currentSearchedDetails);
@@ -135,7 +138,6 @@ $(function() { // start of jQuery function for on load - best practice
                         //const movieID = event.target.id;
                         const modal = $trigger.dataset.target;
                         const $target = document.getElementById(modal);
-                        console.log($target);
 
                         $trigger.addEventListener('click', (event) => {
                             updateModal(event);
