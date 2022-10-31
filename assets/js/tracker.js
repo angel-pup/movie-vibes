@@ -10,6 +10,7 @@ $(function() { // start of jQuery function for on load - best practice
     const $modalTitleEl = $('#modal-movie-title');
     const $modalYearEl = $('#modal-movie-year');
     const $modalButtonEl = $('#modal-movie-button');
+    const $saveListEl = $('#save-list');
 
     // for dynamic elements
     let favoriteMovieOrder = [];
@@ -59,8 +60,16 @@ $(function() { // start of jQuery function for on load - best practice
         }
     }
 
-    function saveCurrentList(array) {
-        localStorage.setItem('favoriteOrder', JSON.stringify(array));
+    function updateListOrder() {
+        const elements = $dragBoxEl.children('li');
+        console.log(elements);
+        let order = [];
+        for (let i = 0; i < elements.length; i++) {
+            console.log(elements[i].attributes.mid.value)
+            order.push(elements[i].attributes.mid.value);
+        }
+        console.log(order);
+        localStorage.setItem('favoriteOrder', JSON.stringify(order));
     }
 
     // for creating movie favorite list dynamically
@@ -80,7 +89,7 @@ $(function() { // start of jQuery function for on load - best practice
     function addToFavorites() {
         grabCurrentList();
         favoriteMovieOrder.unshift(currentMovieTarget);
-        saveCurrentList(favoriteMovieOrder);
+        localStorage.setItem('favoriteOrder', JSON.stringify(favoriteMovieOrder));
         refreshFavorites();
     }
 
@@ -157,6 +166,7 @@ $(function() { // start of jQuery function for on load - best practice
     $actionButtonEl.on('click', APIcall);
     $dragBoxEl.on('sortupdate', grabCurrentList);
     $modalButtonEl.on('click', addToFavorites);
+    $saveListEl.on('click', updateListOrder);
 
     refreshFavorites();
 }); // end of jQuery function for on load best practice
