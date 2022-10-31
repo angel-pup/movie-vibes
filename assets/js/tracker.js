@@ -11,7 +11,7 @@ $(function() { // start of jQuery function for on load - best practice
     const $modalYearEl = $('#modal-movie-year');
     const $modalButtonEl = $('#modal-movie-button');
     const $saveListEl = $('#save-list');
-
+    const $deleteListEl = $('#clear-list');
     // for dynamic elements
     let favoriteMovieOrder = [];
     let currentMovieTarget;
@@ -160,13 +160,18 @@ $(function() { // start of jQuery function for on load - best practice
             }
         });
     }
-
+    
+    function deleteItems() {
+        localStorage.clear();
+        location.reload();
+    }
 
     $searchMovieEl.on('submit', APIcall);
     $actionButtonEl.on('click', APIcall);
     $dragBoxEl.on('sortupdate', grabCurrentList);
     $modalButtonEl.on('click', addToFavorites);
     $saveListEl.on('click', updateListOrder);
+    $deleteListEl.on('click', deleteItems);
 
     refreshFavorites();
 }); // end of jQuery function for on load best practice
