@@ -94,6 +94,7 @@ $(function() { // start of jQuery function for on load - best practice
 
     function updateModal(event) {
         currentMovieTarget = event.target.id;
+        updateLocalStorage(currentMovieTarget);
         let currentMovieInfo = JSON.parse(localStorage.getItem(currentMovieTarget));
         $modalTitleEl.html(currentMovieInfo.Title);
         $modalPlotEl.html(currentMovieInfo.Plot);
