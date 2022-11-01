@@ -76,6 +76,12 @@ $(function() { // start of jQuery function for on load - best practice
         $movieFavEl.empty();
         if (favoriteMovieOrder !== null) {
             favoriteMovieOrder.forEach((m) => {
+                if (localStorage.getItem(m) !== null) {
+                    // Do nothing
+                } else {
+                    updateLocalStorage(m);
+                }
+
                 $movieFavEl.append("<li mid=\"" + m + "\" class=\"listitem\"><div class=\"text box\">" + JSON.parse(localStorage.getItem(m)).Title
                     + " <i class=\"fa fa-film\"></i></div></li>");
             });
@@ -97,6 +103,21 @@ $(function() { // start of jQuery function for on load - best practice
         $modalTitleEl.html(currentMovieInfo.Title);
         $modalPlotEl.html(currentMovieInfo.Plot);
         $modalYearEl.html(currentMovieInfo.Year);
+    }
+
+    function updateLocalStorage(movieID) {
+        let oData2;
+        let sUrl = 'https://www.omdbapi.com/?i=' + movieID + '&type=movie&apikey=5e467eda'
+        $.ajax(sUrl, {
+            complete: function(p_oXHR2, p_sStatus2){
+                oData2 = $.parseJSON(p_oXHR2.responseText);
+                if (oData2.Response === "False") {
+                    console.log("Failed to fetch additional details for " + x.imdbID);
+                } else {
+                    localStorage.setItem(movieID, JSON.stringify(oData2));
+                }
+            }
+        })
     }
 
     function APIcall(p_oEvent) {
@@ -122,18 +143,7 @@ $(function() { // start of jQuery function for on load - best practice
                         if (localStorage.getItem(x.imdbID) !== null) {
                             console.log("Local Storage contains result: " + x.imdbID);
                         } else {
-                            let oData2;
-                            sUrl = 'https://www.omdbapi.com/?i=' + x.imdbID + '&type=movie&apikey=5e467eda'
-                            $.ajax(sUrl, {
-                                complete: function(p_oXHR2, p_sStatus2){
-                                    oData2 = $.parseJSON(p_oXHR2.responseText);
-                                    if (oData2.Response === "False") {
-                                        console.log("Failed to fetch additional details for " + x.imdbID);
-                                    } else {
-                                        localStorage.setItem(x.imdbID, JSON.stringify(oData2));
-                                    }
-                                }
-                            })
+                            updateLocalStorage(x.imdbID);
                         }
                     });
 
