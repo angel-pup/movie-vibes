@@ -3,10 +3,8 @@ Project 1 - KU Bootcamp
 ## Table of Contents
 
 - [Description](#description)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Credits](#credits)
-- [License](#license)
 - [Code Example](#Code-Example)
 - [Live Site](#Live-Site)
 
@@ -16,8 +14,8 @@ We found our shared interest to be movie related, so we decided to build a movie
 
 ## Usage
 Type desired movie into search bar.
-click on movie picture.
-read description in modal.
+Click or press enter to on movie picture.
+Read plot description and movie debut date in modal.
 If it is one of your favorite movies, go ahead and click "Add to Favorites!" button.
 
 ## Credits
@@ -41,20 +39,31 @@ Derek Roberts-
 -draggable favorite movies list
 -favorite movies stay in storage upon page refresh
 -upcoming movie posters with modals that offer movie plot descriptions
+-Easter Eggs of developers favorite movies
 
 [GitHub repository](https://github.com/SpencerRSMS/Coding-Quiz).
 
 ### Some Code Snippets:
-
+Home Page
 ![Screenshot 2022-11-01 123317](https://user-images.githubusercontent.com/112577325/199301689-217f5aaf-c33f-471c-a56c-0c1cb97f74c3.png)
 
+Developer Easter Egg 
 ![Screenshot 2022-11-01 123354](https://user-images.githubusercontent.com/112577325/199301671-4dfc6383-476c-4fb7-8b0f-008fd814ff03.png)
 
+Movie Tracker 
 ![Screenshot 2022-11-01 125256](https://user-images.githubusercontent.com/112577325/199303599-e0514d33-399c-43ad-a8ee-f850f23826ac.png)
 
+Draggable Movie Favorites List
+![Screenshot 2022-11-01 160955](https://user-images.githubusercontent.com/112577325/199342826-00058b64-1667-4dff-90d9-72712487b3c3.png)
+
+Modal with Plot
 ![Screenshot 2022-11-01 123623](https://user-images.githubusercontent.com/112577325/199301646-d43123e8-d34f-49fc-bee8-f8af393a3dd3.png)
 
+Recent and Coming Soon Movies
 ![Screenshot 2022-11-01 123452](https://user-images.githubusercontent.com/112577325/199301633-b7ffcf2b-7bf6-4675-9eda-8ad146804d2c.png)
 
+Modal of Recent and Coming Soon Movies
 ![Screenshot 2022-11-01 125542](https://user-images.githubusercontent.com/112577325/199304138-36dee056-7082-4685-9f57-2688b8361450.png)
+
+
 
