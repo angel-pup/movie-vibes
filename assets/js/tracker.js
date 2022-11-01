@@ -76,8 +76,8 @@ $(function() { // start of jQuery function for on load - best practice
         $movieFavEl.empty();
         if (favoriteMovieOrder !== null) {
             favoriteMovieOrder.forEach((m) => {
-                $movieFavEl.append("<li mid=\"" + m + "\" class=\"listitem\"><div class=\"text\">" + JSON.parse(localStorage.getItem(m)).Title
-                    + "<i class=\"fa fa-film\"></i></div></li>");
+                $movieFavEl.append("<li mid=\"" + m + "\" class=\"listitem\"><div class=\"text box\">" + JSON.parse(localStorage.getItem(m)).Title
+                    + " <i class=\"fa fa-film\"></i></div></li>");
             });
         }
     }
@@ -114,7 +114,7 @@ $(function() { // start of jQuery function for on load - best practice
 
                     oData.forEach((x) => {
                         // Dynamically show results of our API query
-                        $searchResultsEl.append("<div class=\"is-one-quarter js-modal-trigger\"" +
+                        $searchResultsEl.append("<div class=\"is-one-quarter js-modal-trigger box\"" +
                             " data-target=\"modal-js-poster\"><img alt=\'Movie Poster for " + x.Title + "\' id=\'" +
                             x.imdbID + "\' src=\'" + x.Poster + "\'/></div>");
 
