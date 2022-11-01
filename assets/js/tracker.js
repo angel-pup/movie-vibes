@@ -12,6 +12,7 @@ $(function() { // start of jQuery function for on load - best practice
     const $modalButtonEl = $('#modal-movie-button');
     const $saveListEl = $('#save-list');
     const $deleteListEl = $('#clear-list');
+    
     // for dynamic elements
     let favoriteMovieOrder = [];
     let currentMovieTarget;
@@ -62,13 +63,10 @@ $(function() { // start of jQuery function for on load - best practice
 
     function updateListOrder() {
         const elements = $dragBoxEl.children('li');
-        console.log(elements);
         let order = [];
         for (let i = 0; i < elements.length; i++) {
-            console.log(elements[i].attributes.mid.value)
             order.push(elements[i].attributes.mid.value);
         }
-        console.log(order);
         localStorage.setItem('favoriteOrder', JSON.stringify(order));
     }
 
@@ -111,18 +109,12 @@ $(function() { // start of jQuery function for on load - best practice
                 if (oData.Response === "False") {
                     $searchResultsEl.hide();
                 } else {
-                    (document.querySelectorAll('.js-modal-trigger') || [])
-                        .forEach(($trigger) => {
-                            $trigger.removeEventListener('click', (event)); });
-
                     $searchResultsEl.empty();
-
-                    currentSearchedDetails = {};
 
                     oData.forEach((x) => {
                         // Dynamically show results of our API query
-                        $searchResultsEl.append("<div class=\"poster is-one-quarter js-modal-trigger\"" +
-                            " data-target=\"modal-js-poster\"><img alt=\'Movie Poster for...\' id=\'" +
+                        $searchResultsEl.append("<div class=\"is-one-quarter js-modal-trigger\"" +
+                            " data-target=\"modal-js-poster\"><img alt=\'Movie Poster for " + x.Title + "\' id=\'" +
                             x.imdbID + "\' src=\'" + x.Poster + "\'/></div>");
 
                         // Store new results in local storage to save on API calls
