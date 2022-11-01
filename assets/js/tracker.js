@@ -101,6 +101,11 @@ $(function() { // start of jQuery function for on load - best practice
         $modalYearEl.html(currentMovieInfo.Year);
     }
 
+    /**
+     * Check if movie is in local storage, if not add to local storage
+     * Saves on API calls
+     * @param movieID id of movie
+     */
     function updateLocalStorage(movieID) {
         if (localStorage.getItem(movieID) !== null) {
             // Do nothing
@@ -139,7 +144,6 @@ $(function() { // start of jQuery function for on load - best practice
                             " data-target=\"modal-js-poster\"><img alt=\'Movie Poster for " + x.Title + "\' id=\'" +
                             x.imdbID + "\' src=\'" + x.Poster + "\'/></div>");
 
-                        // Store new results in local storage to save on API calls
                         updateLocalStorage(x.imdbID);
                     });
 
