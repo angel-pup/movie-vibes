@@ -1,6 +1,6 @@
 $(function() { // start of jQuery function for on load - best practice
 
-    // for event handling and modifying elements on page
+    // declarations for event handling and modifying elements on page
     const $movieFavEl = $("#movie-fav");
     const $dragBoxEl = $(".dragbox");
     const $searchMovieEl = $("#search-movie");
@@ -12,9 +12,9 @@ $(function() { // start of jQuery function for on load - best practice
     const $modalButtonEl = $('#modal-movie-button');
     const $saveListEl = $('#save-list');
     const $deleteListEl = $('#clear-list');
-    // for dynamic elements
-    let favoriteMovieOrder = [];
-    let currentMovieTarget;
+    // for dynamic elements/ local variables
+    let favoriteMovieOrder = []; //will hold displayed favorite movie order.
+    let currentMovieTarget; //current target when modal trigger got activated
 
     // sortable functionality
     $dragBoxEl.sortable({
@@ -22,14 +22,25 @@ $(function() { // start of jQuery function for on load - best practice
         opacity: 0.5
     })
 
+    /**
+     * takes in an element and adds an is-active class; is utilized to open modals.
+     * @param {*} $el modal element to be activated.
+     */
     function openModal($el) {
         $el.classList.add('is-active');
     }
 
+    /**
+     * takes in an element and removes an is-active class; is utilized to close modals.
+     * @param {*} $el modal element to be deactivated 
+     */
     function closeModal($el) {
         $el.classList.remove('is-active');
     }
 
+    /**
+     * closes all modals by utilizing closeModal function
+     */
     function closeAllModals() {
         (document.querySelectorAll('.modal') || []).forEach(($modal) => {
             closeModal($modal);
@@ -54,25 +65,31 @@ $(function() { // start of jQuery function for on load - best practice
         }
     });
 
+    /**
+     * grabs local storage data for current favorite order
+     */
     function grabCurrentList() {
         if (localStorage.getItem('favoriteOrder') !== null) {
                 favoriteMovieOrder = JSON.parse(localStorage.getItem('favoriteOrder'));
         }
     }
 
+    /**
+     * grabs the favorite list from the onscreen list and updates order in local storage
+     * needed in case order is changed via sortable - attached to save-list button.
+     */
     function updateListOrder() {
         const elements = $dragBoxEl.children('li');
-        console.log(elements);
         let order = [];
         for (let i = 0; i < elements.length; i++) {
-            console.log(elements[i].attributes.mid.value)
             order.push(elements[i].attributes.mid.value);
         }
-        console.log(order);
         localStorage.setItem('favoriteOrder', JSON.stringify(order));
     }
 
-    // for creating movie favorite list dynamically
+    /**
+     * refreshes list based off of what's in local storage on page load.
+     */
     function refreshFavorites() {
         grabCurrentList();
         $movieFavEl.empty();
@@ -84,8 +101,9 @@ $(function() { // start of jQuery function for on load - best practice
         }
     }
 
-    // for adding movies to favorite list, calls refresh
-    //Favorites function
+    /**
+     *  for adding movies to favorite list, calls refresh
+     */
     function addToFavorites() {
         grabCurrentList();
         favoriteMovieOrder.unshift(currentMovieTarget);
@@ -93,6 +111,10 @@ $(function() { // start of jQuery function for on load - best practice
         refreshFavorites();
     }
 
+    /**
+     * updates modal with appropriate movie information
+     * @param {Object} event for grabbing current movie id 
+     */
     function updateModal(event) {
         currentMovieTarget = event.target.id;
         $modalTitleEl.html(JSON.parse(localStorage.getItem(currentMovieTarget)).Title);
@@ -100,24 +122,26 @@ $(function() { // start of jQuery function for on load - best practice
         $modalYearEl.html(JSON.parse(localStorage.getItem(currentMovieTarget)).Year);
     }
 
+    /**
+     * 
+     * @param {*} p_oEvent 
+     */
     function APIcall(p_oEvent) {
-        let sUrl, sMovie, oData;
+        let sUrl, sMovie, oData; 
         p_oEvent.preventDefault();
         sMovie = $searchMovieEl.find('input').val();
         sUrl = 'https://www.omdbapi.com/?s=' + sMovie + '&type=movie&tomatoes=true&apikey=5e467eda'
         $.ajax(sUrl, {
-            complete: function(p_oXHR, p_sStatus){
+            complete: function(p_oXHR, p_sStatus){ //on completion grabs status codes. 
                 oData = $.parseJSON(p_oXHR.responseText).Search; // Modify for dynamic search results
-                if (oData.Response === "False") {
+                if (oData.Response === "False") { //if false it will hide search results
                     $searchResultsEl.hide();
                 } else {
                     (document.querySelectorAll('.js-modal-trigger') || [])
                         .forEach(($trigger) => {
                             $trigger.removeEventListener('click', (event)); });
 
-                    $searchResultsEl.empty();
-
-                    currentSearchedDetails = {};
+                    $searchResultsEl.empty(); //whenever we get successful response it clears out results
 
                     oData.forEach((x) => {
                         // Dynamically show results of our API query
@@ -144,8 +168,10 @@ $(function() { // start of jQuery function for on load - best practice
                         }
                     });
 
+                    /**
+                     * adds an event listener to all poster elements
+                     */
                     (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
-                        //const movieID = event.target.id;
                         const modal = $trigger.dataset.target;
                         const $target = document.getElementById(modal);
 
@@ -161,16 +187,40 @@ $(function() { // start of jQuery function for on load - best practice
         });
     }
     
+    /**
+     * deletes all information from local storage
+     * refreshes page
+     */
     function deleteItems() {
         localStorage.clear();
         location.reload();
     }
 
+    //event listeners
+  
+    /**
+     * calls api function based on user text submission
+     */
     $searchMovieEl.on('submit', APIcall);
+    /**
+     * calls api after button click
+     */
     $actionButtonEl.on('click', APIcall);
+    /**
+     * allows user to click and drag favorite movie list
+     */
     $dragBoxEl.on('sortupdate', grabCurrentList);
+    /**
+     * allows user to add movie to favorites list from modal
+     */
     $modalButtonEl.on('click', addToFavorites);
+    /**
+     * saves favorite movies list until cleared from local storage
+     */
     $saveListEl.on('click', updateListOrder);
+    /**
+     * clears local storage data
+     */
     $deleteListEl.on('click', deleteItems);
 
     refreshFavorites();
