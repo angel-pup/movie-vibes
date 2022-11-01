@@ -22,11 +22,13 @@ If it is one of your favorite movies, go ahead and click "Add to Favorites!" but
 Developed by: 
 
 Spencer Stewart- 
-[GitHub](https://github.com/SpencerRSMS/)
+[GitHub](https://github.com/SpencerRSMS)
 
 Scott WeinKauf-
+[GitHub](https://github.com/sweinkauf)
 
 Jeremiah Warren-
+[GitHub](https://github.com/Jwarren619)
 
 Derek Roberts-
 [GitHub](https://github.com/deroberts)
