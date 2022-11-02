@@ -65,5 +65,6 @@ Recent and Coming Soon Movies
 Modal of Recent and Coming Soon Movies
 ![Screenshot 2022-11-01 125542](https://user-images.githubusercontent.com/112577325/199304138-36dee056-7082-4685-9f57-2688b8361450.png)
 
-
+##Live Site
+https://spencerrsms.github.io/movie-vibes/
 
