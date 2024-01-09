@@ -21,8 +21,8 @@ If it is one of your favorite movies, go ahead and click "Add to Favorites!" but
 ## Credits
 Developed by:
 
-Spencer Stewart-
-[GitHub](https://github.com/SpencerRSMS)
+Vess Stewart-
+[GitHub](https://github.com/angel-pup)
 
 Scott WeinKauf-
 [GitHub](https://github.com/sweinkauf)
